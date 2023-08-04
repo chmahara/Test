@@ -1,0 +1,26 @@
+---
+ - name : Reboot of the LINUX hosts
+   hosts: all
+   become: true
+   become_user: root
+   tasks:
+    - name: Reboot the machine
+      reboot: 
+      register: result
+    - name: print result
+      debug:
+        msg: '{{result}}'
+
+    - name: Check for the uptime of the server
+      shell: "uptime"
+      register: uptime
+    - name: print uptime
+      debug:
+       msg: '{{uptime.stdout}}'
+
+    - name: Check for Kernel Version of the host
+      shell: "uname -r"
+      register: result
+    - name: Print result
+      debug:
+        msg: '{{result.stdout}}'
